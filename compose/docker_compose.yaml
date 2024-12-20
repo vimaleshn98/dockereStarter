@@ -1,0 +1,23 @@
+networks:
+  python-app-network:
+
+volumes:
+  python-app-volumes:
+
+services:
+  my-forntend:
+    build: .
+    command: python app.py
+    ports:
+      - target: 8080
+        published: 5001
+    networks:
+      python-app-network:
+    volumes:
+      - type: volume
+        source: python-app-volumes
+        target: /app
+  redis:
+    image: "redis:alpine"
+    networks:
+      python-app-network:
